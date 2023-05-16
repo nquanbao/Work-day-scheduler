@@ -21,3 +21,51 @@ $(function () {
   //
   // TODO: Add code to display the current date in the header of the page.
 });
+
+var timecheck = $('.time-block');
+var btnSaveEl = $('.saveBtn');
+var discriptionEl = $('.description')
+
+//update the date
+var today = dayjs();
+ $('#currentDay').text(today.format('dddd, MMMM D  hh:mm A'));
+
+ // Funtion to check the status for each block time
+var timeStatus = function(e) {
+  for (var i = 0; i <timecheck.length; i++){
+    if(timecheck[i].dataset.time == dayjs().get('hour')){
+      timecheck[i].classList.remove('past');
+      timecheck[i].classList.remove('future');
+      timecheck[i].classList.add('present');
+    } else if(timecheck[i].dataset.time < dayjs().get('hour')) {
+      timecheck[i].classList.remove('present');
+      timecheck[i].classList.remove('future');
+      timecheck[i].classList.add('past');
+    } else {
+      timecheck[i].classList.remove('past');
+      timecheck[i].classList.remove('present');
+      timecheck[i].classList.add('future');
+    }
+   
+
+  }
+  // console.log(dayjs().get('hour'))
+}
+
+//Funtion to save the discription into the localstorage
+function localSaveEl (blocktime) {
+  var saveLocal = JSON.parse(localStorage.getItem("blockEvent")) || []
+  var inputValue = discriptionEl.val();
+  saveLocal.push(inputValue)
+  localStorage.setItem('blockEvent', JSON.stringify(saveLocal))
+}
+timeStatus()
+
+console.log(discriptionEl.val())
+btnSaveEl.on('click',function(e){
+  e.preventDefault()
+  localSaveEl();
+  
+})
+
+console.log(localStorage.getItem('blockEvent'))
