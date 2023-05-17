@@ -26,7 +26,7 @@ var currentTime = $('#currentDay')
 var timecheck = $('.time-block');
 var btnSaveEl = $('.saveBtn');
 var discriptionEl = $('.description')
-// var saveLocal = JSON.parse(localStorage.getItem("blockEvent")) || []
+
 
 //update the date
 function DateAndTime(){
@@ -61,22 +61,37 @@ timeStatus()
 
 //Funtion to save the discription into the localstorage
 function localSaveEl (blocktimeEvent, valueDescripton) {
+    var saveLocal = JSON.parse(localStorage.getItem("blockEvent")) || []
     var inputValue = valueDescripton;
     saveLocal.push(inputValue)
     localStorage.setItem(blocktimeEvent, JSON.stringify(saveLocal))
 }
 
-btnSaveEl.on("click", function(){
-  var saveLocal = JSON.parse(localStorage.getItem("blockEvent")) || []
+for( var i = 0; i < timecheck.length; i++){
+  var idTake = timecheck[i].getAttribute('id')
+  var aaa = localStorage.getItem(idTake)
+  // console.log(aaa)
+  timecheck[i].children[1].innerHTML = JSON.parse(localStorage.getItem(idTake))
+  // var valShow = idTake.children[1]
+  // var aaaa = valShow.value
+  // console.log(aaaa)
+  // valShow.innerHTML = localStorage.getItem(idTake)
+}
+
+
+btnSaveEl.on("click", function(e){
+  
+  // var saveLocal = JSON.parse(localStorage.getItem("blockEvent")) || []
   var idClick = this.parentNode;
   // console.log(idClick)
   var idGetValue = idClick.getAttribute('id')
   var hhhhh = idClick.children[1].value
-  console.log(idGetValue)
-  console.log(hhhhh)
+  // console.log(idGetValue)
+  // console.log(hhhhh)
   // // console.log(idGetValue)
   // // console.log(kkk)
   // localSaveEl(idGetValue,hhhhh)
-  saveLocal.push(hhhhh)
-  localStorage.setItem(idGetValue, JSON.stringify(saveLocal))
+  // saveLocal.push(hhhhh)
+  // localStorage.setItem(idGetValue, JSON.stringify(saveLocal))
+  localSaveEl(idGetValue,hhhhh)
 })
