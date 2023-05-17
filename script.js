@@ -29,8 +29,6 @@ var timeStatus = function(e) {
       timecheck[i].classList.remove('present');
       timecheck[i].classList.add('future');
     }
-   
-
   }
 }
 
