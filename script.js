@@ -22,13 +22,19 @@ $(function () {
   // TODO: Add code to display the current date in the header of the page.
 });
 
+var currentTime = $('#currentDay')
 var timecheck = $('.time-block');
 var btnSaveEl = $('.saveBtn');
 var discriptionEl = $('.description')
+// var saveLocal = JSON.parse(localStorage.getItem("blockEvent")) || []
 
 //update the date
-var today = dayjs();
- $('#currentDay').text(today.format('dddd, MMMM D  hh:mm A'));
+function DateAndTime(){
+  var current = dayjs().format('DD, MMM YYYY hh:mm:ss A')
+  currentTime.text(current)
+}
+DateAndTime();
+setInterval(DateAndTime,1000)
 
  // Funtion to check the status for each block time
 var timeStatus = function(e) {
@@ -49,23 +55,28 @@ var timeStatus = function(e) {
    
 
   }
-  // console.log(dayjs().get('hour'))
 }
 
-//Funtion to save the discription into the localstorage
-function localSaveEl (blocktime) {
-  var saveLocal = JSON.parse(localStorage.getItem("blockEvent")) || []
-  var inputValue = discriptionEl.val();
-  saveLocal.push(inputValue)
-  localStorage.setItem('blockEvent', JSON.stringify(saveLocal))
-}
 timeStatus()
 
-console.log(discriptionEl.val())
-btnSaveEl.on('click',function(e){
-  e.preventDefault()
-  localSaveEl();
-  
-})
+//Funtion to save the discription into the localstorage
+function localSaveEl (blocktimeEvent, valueDescripton) {
+    var inputValue = valueDescripton;
+    saveLocal.push(inputValue)
+    localStorage.setItem(blocktimeEvent, JSON.stringify(saveLocal))
+}
 
-console.log(localStorage.getItem('blockEvent'))
+btnSaveEl.on("click", function(){
+  var saveLocal = JSON.parse(localStorage.getItem("blockEvent")) || []
+  var idClick = this.parentNode;
+  // console.log(idClick)
+  var idGetValue = idClick.getAttribute('id')
+  var hhhhh = idClick.children[1].value
+  console.log(idGetValue)
+  console.log(hhhhh)
+  // // console.log(idGetValue)
+  // // console.log(kkk)
+  // localSaveEl(idGetValue,hhhhh)
+  saveLocal.push(hhhhh)
+  localStorage.setItem(idGetValue, JSON.stringify(saveLocal))
+})
